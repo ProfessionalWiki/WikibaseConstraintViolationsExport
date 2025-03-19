@@ -27,7 +27,7 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 	public function __construct() {
 		parent::__construct();
 
-		$this->requireExtension( 'WikibaseQualityConstraints' );
+		$this->requireExtension( 'Wikibase Quality Constraints Export' );
 		$this->addDescription( 'Generates constraints violations in JSON format' );
 	}
 
