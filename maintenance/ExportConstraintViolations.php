@@ -10,6 +10,7 @@ use MediaWiki\Message\Message;
 use MessageLocalizer;
 use ProfessionalWiki\WikibaseQualityConstraintsExport\Presentation\PlainTextViolationMessageRenderer;
 use ValueFormatters\FormatterOptions;
+use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Services\EntityId\EntityIdPager;
 use Wikibase\Lib\Formatters\SnakFormatter;
 use Wikibase\Repo\Store\Sql\SqlEntityIdPagerFactory;
@@ -38,6 +39,9 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 	public function execute() {
 		$entityIdPager = $this->getEntityIdPager();
 		$violationMessageRenderer = $this->getViolationMessageRenderer();
+		$labelLookup = WikibaseRepo::getFallbackLabelDescriptionLookupFactory()->newLabelDescriptionLookup(
+			MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' )
+		);
 
 		$allViolations = [];
 
@@ -61,6 +65,7 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 					'messageKey' => $result->getMessage()->getMessageKey(),
 					'message' => $violationMessageRenderer->render( $result->getMessage() ),
 					'constraint' => $result->getConstraintId(),
+					'constraintType' => $labelLookup->getLabel( new ItemId( $result->getConstraint()->getConstraintTypeItemId() ) )->getText()
 				];
 			}
 			if ( $violations !== [] ) {
