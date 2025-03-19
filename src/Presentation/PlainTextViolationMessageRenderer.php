@@ -78,13 +78,7 @@ class PlainTextViolationMessageRenderer {
 	 * @return string HTML
 	 */
 	protected function addRole( string $value, ?string $role ): string {
-		if ( $role === null ) {
-			return $value;
-		}
-
-		return '<span class="wbqc-role wbqc-role-' . htmlspecialchars( $role ) . '">' .
-			$value .
-			'</span>';
+		return "'$value'";
 	}
 
 	/**
@@ -143,7 +137,7 @@ class PlainTextViolationMessageRenderer {
 		if ( $list === [] ) {
 			return [
 				Message::numParam( 0 ),
-				Message::rawParam( '<ul></ul>' ),
+				Message::rawParam( '' ),
 			];
 		}
 
@@ -167,9 +161,9 @@ class PlainTextViolationMessageRenderer {
 			[
 				Message::numParam( count( $list ) ),
 				Message::rawParam(
-					'<ul><li>' .
-					implode( '</li><li>', $renderedElements ) .
-					'</li></ul>'
+					'(' .
+					implode( ', ', $renderedElements ) .
+					')'
 				),
 			],
 			$renderedParams
@@ -208,16 +202,16 @@ class PlainTextViolationMessageRenderer {
 				return $this->renderEntityId( $value->getItemId(), $role );
 			case $value->isSomeValue():
 				return [ Message::rawParam( $this->addRole(
-					'<span class="wikibase-snakview-variation-somevaluesnak">' .
+					"'" .
 					$this->msgEscaped( 'wikibase-snakview-snaktypeselector-somevalue' ) .
-					'</span>',
+					"'",
 					$role
 				) ) ];
 			case $value->isNoValue():
 				return [ Message::rawParam( $this->addRole(
-					'<span class="wikibase-snakview-variation-novaluesnak">' .
+					"'" .
 					$this->msgEscaped( 'wikibase-snakview-snaktypeselector-novalue' ) .
-					'</span>',
+					"'" ,
 					$role
 				) ) ];
 			default:
@@ -285,7 +279,7 @@ class PlainTextViolationMessageRenderer {
 	 */
 	private function renderInlineCode( string $code, ?string $role ): array {
 		return [ Message::rawParam( $this->addRole(
-			'<code>' . htmlspecialchars( $code ) . '</code>',
+			"'" . htmlspecialchars( $code ) . "'",
 			$role
 		) ) ];
 	}
