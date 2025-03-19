@@ -68,7 +68,7 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 			}
 		}
 
-		print( json_encode( $allViolations ) );
+		$this->output( json_encode( $allViolations ) );
 	}
 
 	private function getEntityIdPager(): EntityIdPager {
