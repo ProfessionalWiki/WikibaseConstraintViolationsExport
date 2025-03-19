@@ -1,12 +1,17 @@
 <?php
 
+declare( strict_types = 1 );
+
 namespace ProfessionalWiki\WikibaseQualityConstraintsExport\Maintenance;
 
 use MediaWiki\Maintenance\Maintenance;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Message\Message;
 use MessageLocalizer;
+use ProfessionalWiki\WikibaseQualityConstraintsExport\Presentation\PlainTextViolationMessageRenderer;
+use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Services\EntityId\EntityIdPager;
+use Wikibase\Lib\Formatters\SnakFormatter;
 use Wikibase\Repo\Store\Sql\SqlEntityIdPagerFactory;
 use Wikibase\Repo\WikibaseRepo;
 use WikibaseQuality\ConstraintReport\ConstraintCheck\Message\ViolationMessageRenderer;
@@ -76,10 +81,18 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 
 	private function getViolationMessageRenderer(): ViolationMessageRenderer {
 		$language = MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' );
-		return ConstraintsServices::getViolationMessageRendererFactory()->getViolationMessageRenderer(
-			MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' ),
-			WikibaseRepo::getLanguageFallbackChainFactory()->newFromLanguage( $language ),
-			$this
+
+		$formatterOptions = new FormatterOptions();
+		$formatterOptions->setOption( SnakFormatter::OPT_LANG, $language->getCode() );
+
+		return new PlainTextViolationMessageRenderer(
+			entityIdFormatter: WikibaseRepo::getEntityIdLabelFormatterFactory()->getEntityIdFormatter( $language ),
+			dataValueFormatter: WikibaseRepo::getValueFormatterFactory()->getValueFormatter( SnakFormatter::FORMAT_HTML, $formatterOptions ),
+			languageNameUtils: MediaWikiServices::getInstance()->getLanguageNameUtils(),
+			userLanguageCode: $language->getCode(),
+			languageFallbackChain: WikibaseRepo::getLanguageFallbackChainFactory()->newFromLanguage( $language ),
+			messageLocalizer: $this,
+			config: MediaWikiServices::getInstance()->getMainConfig()
 		);
 	}
 

@@ -1,0 +1,24 @@
+{
+	"name": "Wikibase Quality Constraints Export",
+
+	"version": "0.0.0",
+
+	"author": [
+		"[https://Professional.Wiki/ Professional Wiki]"
+	],
+
+	"license-name": "GPL-2.0-or-later",
+
+	"url": "TODO",
+
+	"requires": {
+		"MediaWiki": ">= 1.39.0"
+	},
+
+	"AutoloadNamespaces": {
+		"ProfessionalWiki\\WikibaseQualityConstraintsExport\\": "src/",
+		"ProfessionalWiki\\WikibaseQualityConstraintsExport\\Maintenance\\": "maintenance/"
+	},
+
+	"manifest_version": 2
+}
