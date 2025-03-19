@@ -87,7 +87,7 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 
 		return new PlainTextViolationMessageRenderer(
 			entityIdFormatter: WikibaseRepo::getEntityIdLabelFormatterFactory()->getEntityIdFormatter( $language ),
-			dataValueFormatter: WikibaseRepo::getValueFormatterFactory()->getValueFormatter( SnakFormatter::FORMAT_HTML, $formatterOptions ),
+			dataValueFormatter: WikibaseRepo::getValueFormatterFactory()->getValueFormatter( SnakFormatter::FORMAT_PLAIN, $formatterOptions ),
 			languageNameUtils: MediaWikiServices::getInstance()->getLanguageNameUtils(),
 			userLanguageCode: $language->getCode(),
 			languageFallbackChain: WikibaseRepo::getLanguageFallbackChainFactory()->newFromLanguage( $language ),
