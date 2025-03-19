@@ -79,7 +79,7 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 		) )->newSqlEntityIdPager();
 	}
 
-	private function getViolationMessageRenderer(): ViolationMessageRenderer {
+	private function getViolationMessageRenderer(): PlainTextViolationMessageRenderer {
 		$language = MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' );
 
 		$formatterOptions = new FormatterOptions();
