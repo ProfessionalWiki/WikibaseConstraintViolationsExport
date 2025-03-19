@@ -53,9 +53,9 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 				$violations[] = [
 					'status' => $result->getStatus(),
 					'property' => $result->getContextCursor()->getSnakPropertyId(),
+					'messageKey' => $result->getMessage()->getMessageKey(),
 					'message' => $violationMessageRenderer->render( $result->getMessage() ),
-					'constraint' => $result->getConstraintId()
-
+					'constraint' => $result->getConstraintId(),
 				];
 			}
 			if ( $violations !== [] ) {
