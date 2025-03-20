@@ -69,7 +69,7 @@ class PlainTextViolationMessageRenderer {
 		return $this->messageLocalizer
 			->msg( $messageKey )
 			->params( $allParams )
-			->escaped();
+			->text();
 	}
 
 	/**
@@ -86,7 +86,7 @@ class PlainTextViolationMessageRenderer {
 	 * @return string HTML
 	 */
 	protected function msgEscaped( string $key ): string {
-		return $this->messageLocalizer->msg( $key )->escaped();
+		return $this->messageLocalizer->msg( $key )->text();
 	}
 
 	/**
