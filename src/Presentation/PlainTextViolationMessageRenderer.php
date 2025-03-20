@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace ProfessionalWiki\WikibaseQualityConstraintsExport\Presentation;
+namespace ProfessionalWiki\WikibaseConstraintViolationsExport\Presentation;
 
 use DataValues\DataValue;
 use MediaWiki\Config\Config;

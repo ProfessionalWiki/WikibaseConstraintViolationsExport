@@ -1,11 +1,11 @@
-# Wikibase Quality Constraints Export
+# Wikibase Constraint Violations Export
 
 Enable extension in LocalSettings:
 ```php
-wfLoadExtension( 'WikibaseQualityConstraintsExport' );
+wfLoadExtension( 'WikibaseConstraintViolationsExport' );
 ```
 
 To export constraint violations in JSON format, run:
 ```bash
-php maintenance/run.php ./extensions/WikibaseQualityConstraintsExport/maintenance/ExportConstraintViolations.php
+php maintenance/run.php ./extensions/WikibaseConstraintViolationsExport/maintenance/ExportConstraintViolations.php
 ```

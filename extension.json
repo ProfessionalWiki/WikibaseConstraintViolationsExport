@@ -19,8 +19,8 @@
 	},
 
 	"AutoloadNamespaces": {
-		"ProfessionalWiki\\WikibaseQualityConstraintsExport\\": "src/",
-		"ProfessionalWiki\\WikibaseQualityConstraintsExport\\Maintenance\\": "maintenance/"
+		"ProfessionalWiki\\WikibaseConstraintViolationsExport\\": "src/",
+		"ProfessionalWiki\\WikibaseConstraintViolationsExport\\Maintenance\\": "maintenance/"
 	},
 
 	"manifest_version": 2

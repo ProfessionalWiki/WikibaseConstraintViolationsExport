@@ -2,14 +2,14 @@
 
 declare( strict_types = 1 );
 
-namespace ProfessionalWiki\WikibaseQualityConstraintsExport\Maintenance;
+namespace ProfessionalWiki\WikibaseConstraintViolationsExport\Maintenance;
 
 use MediaWiki\Language\Language;
 use MediaWiki\Maintenance\Maintenance;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Message\Message;
 use MessageLocalizer;
-use ProfessionalWiki\WikibaseQualityConstraintsExport\Presentation\PlainTextViolationMessageRenderer;
+use ProfessionalWiki\WikibaseConstraintViolationsExport\Presentation\PlainTextViolationMessageRenderer;
 use ValueFormatters\FormatterOptions;
 use ValueFormatters\ValueFormatter;
 use Wikibase\DataModel\Services\EntityId\EntityIdPager;
