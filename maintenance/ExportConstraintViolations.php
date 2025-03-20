@@ -4,12 +4,14 @@ declare( strict_types = 1 );
 
 namespace ProfessionalWiki\WikibaseQualityConstraintsExport\Maintenance;
 
+use MediaWiki\Language\Language;
 use MediaWiki\Maintenance\Maintenance;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Message\Message;
 use MessageLocalizer;
 use ProfessionalWiki\WikibaseQualityConstraintsExport\Presentation\PlainTextViolationMessageRenderer;
 use ValueFormatters\FormatterOptions;
+use ValueFormatters\ValueFormatter;
 use Wikibase\DataModel\Services\EntityId\EntityIdPager;
 use Wikibase\Lib\Formatters\SnakFormatter;
 use Wikibase\Repo\Store\Sql\SqlEntityIdPagerFactory;
@@ -37,6 +39,9 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 	public function execute() {
 		$entityIdPager = $this->getEntityIdPager();
 		$violationMessageRenderer = $this->getViolationMessageRenderer();
+		$dataValueFormatter = $this->getValueFormatter(
+			MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' )
+		);
 
 		$allViolations = [];
 
@@ -60,7 +65,8 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 					'messageKey' => $result->getMessage()->getMessageKey(),
 					'message' => $violationMessageRenderer->render( $result->getMessage() ),
 					'constraintId' => $result->getConstraintId(),
-					'constraintType' => $result->getConstraint()->getConstraintTypeItemId()
+					'constraintType' => $result->getConstraint()->getConstraintTypeItemId(),
+					'value' => $result->getDataValue() === null ? '' : $dataValueFormatter->format( $result->getDataValue() )
 				];
 			}
 			if ( $violations !== [] ) {
@@ -82,18 +88,21 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 	private function getViolationMessageRenderer(): PlainTextViolationMessageRenderer {
 		$language = MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' );
 
-		$formatterOptions = new FormatterOptions();
-		$formatterOptions->setOption( SnakFormatter::OPT_LANG, $language->getCode() );
-
 		return new PlainTextViolationMessageRenderer(
 			entityIdFormatter: WikibaseRepo::getEntityIdLabelFormatterFactory()->getEntityIdFormatter( $language ),
-			dataValueFormatter: WikibaseRepo::getValueFormatterFactory()->getValueFormatter( SnakFormatter::FORMAT_PLAIN, $formatterOptions ),
+			dataValueFormatter: $this->getValueFormatter( $language ),
 			languageNameUtils: MediaWikiServices::getInstance()->getLanguageNameUtils(),
 			userLanguageCode: $language->getCode(),
 			languageFallbackChain: WikibaseRepo::getLanguageFallbackChainFactory()->newFromLanguage( $language ),
 			messageLocalizer: $this,
 			config: MediaWikiServices::getInstance()->getMainConfig()
 		);
+	}
+
+	private function getValueFormatter( Language $language ): ValueFormatter {
+		$formatterOptions = new FormatterOptions();
+		$formatterOptions->setOption( SnakFormatter::OPT_LANG, $language->getCode() );
+		return WikibaseRepo::getValueFormatterFactory()->getValueFormatter( SnakFormatter::FORMAT_PLAIN, $formatterOptions );
 	}
 
 }
