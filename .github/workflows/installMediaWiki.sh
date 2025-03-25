@@ -14,7 +14,7 @@ composer install
 php maintenance/install.php --dbtype sqlite --dbuser root --dbname mw --dbpath $(pwd) --pass AdminPassword WikiName AdminUser
 
 cat <<'EOT' >> LocalSettings.php
-error_reporting(E_ALL| E_STRICT);
+error_reporting(E_ALL & ~E_DEPRECATED);
 ini_set("display_errors", "1");
 $wgShowExceptionDetails = true;
 $wgShowDBErrorBacktrace = true;
