@@ -34,12 +34,12 @@ php maintenance/run.php ./extensions/WikibaseConstraintViolationsExport/maintena
   "Q53": [
     {
       "status": "warning",
-      "propertyId": "P26",
-      "messageKey": "wbqc-violation-message-valueType-instanceOrSubclass",
-      "message": "Values of 'author' statements should be instances or subclasses of 'human' (or of a subclass of it), but 'CSS for Dummies' currently isn't.",
-      "constraintId": "P26$63c3096f-4878-61d7-2bdb-5e5805de2fa3",
-      "constraintType": "Q9",
-      "value": "CSS for Dummies"
+      "propertyId": "P27",
+      "messageKey": "wbqc-violation-message-units",
+      "message": "The value for 'weight' should have one of the following units: ('kg', 'lb', 'g')",
+      "constraintId": "P27$94f07a4b-4ecb-cb2c-1b33-e6b1097b39c0",
+      "constraintType": "Q25",
+      "value": "1 stone"
     },
     {
       "status": "warning",
@@ -54,12 +54,12 @@ php maintenance/run.php ./extensions/WikibaseConstraintViolationsExport/maintena
   "Q54": [
     {
       "status": "warning",
-      "propertyId": "P27",
-      "messageKey": "wbqc-violation-message-units",
-      "message": "The value for 'weight' should have one of the following units: ('kg', 'lb', 'g')",
-      "constraintId": "P27$94f07a4b-4ecb-cb2c-1b33-e6b1097b39c0",
-      "constraintType": "Q25",
-      "value": "1 stone"
+      "propertyId": "P26",
+      "messageKey": "wbqc-violation-message-valueType-instanceOrSubclass",
+      "message": "Values of 'author' statements should be instances or subclasses of 'human' (or of a subclass of it), but 'CSS for Dummies' currently isn't.",
+      "constraintId": "P26$63c3096f-4878-61d7-2bdb-5e5805de2fa3",
+      "constraintType": "Q9",
+      "value": "CSS for Dummies"
     }
   ],
   "Q55": [
