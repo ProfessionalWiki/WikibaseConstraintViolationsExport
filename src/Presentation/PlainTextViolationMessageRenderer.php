@@ -4,10 +4,11 @@ declare( strict_types = 1 );
 
 namespace ProfessionalWiki\WikibaseConstraintViolationsExport\Presentation;
 
+use Config;
 use DataValues\DataValue;
-use MediaWiki\Config\Config;
+use InvalidArgumentException;
 use MediaWiki\Languages\LanguageNameUtils;
-use MediaWiki\Message\Message;
+use Message;
 use MessageLocalizer;
 use ValueFormatters\ValueFormatter;
 use Wikibase\DataModel\Entity\EntityId;
