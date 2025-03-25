@@ -1,5 +1,8 @@
 # Wikibase Constraint Violations Export
 
+ Export violations from the [WikibaseQualityConstraints](https://www.mediawiki.org/wiki/Extension:WikibaseQualityConstraints)
+ extension to JSON via a maintenance script.
+
 ## Installation
 
 Place the extension in the `extensions/` directory.
