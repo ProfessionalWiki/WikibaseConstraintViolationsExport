@@ -4,16 +4,17 @@ declare( strict_types = 1 );
 
 namespace ProfessionalWiki\WikibaseConstraintViolationsExport\Maintenance;
 
-use MediaWiki\Language\Language;
-use MediaWiki\Maintenance\Maintenance;
+use Language;
+use Maintenance;
 use MediaWiki\MediaWikiServices;
-use MediaWiki\Message\Message;
+use Message;
 use MessageLocalizer;
 use ProfessionalWiki\WikibaseConstraintViolationsExport\Presentation\PlainTextViolationMessageRenderer;
 use ValueFormatters\FormatterOptions;
 use ValueFormatters\ValueFormatter;
 use Wikibase\DataModel\Services\EntityId\EntityIdPager;
 use Wikibase\Lib\Formatters\SnakFormatter;
+use Wikibase\Repo\EntityIdLabelFormatterFactory;
 use Wikibase\Repo\Store\Sql\SqlEntityIdPagerFactory;
 use Wikibase\Repo\WikibaseRepo;
 use WikibaseQuality\ConstraintReport\ConstraintCheck\Result\CheckResult;
@@ -89,7 +90,7 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 		$language = MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' );
 
 		return new PlainTextViolationMessageRenderer(
-			entityIdFormatter: WikibaseRepo::getEntityIdLabelFormatterFactory()->getEntityIdFormatter( $language ),
+			entityIdFormatter: $this->getEntityIdLabelFormatter()->getEntityIdFormatter( $language ),
 			dataValueFormatter: $this->getValueFormatter( $language ),
 			languageNameUtils: MediaWikiServices::getInstance()->getLanguageNameUtils(),
 			userLanguageCode: $language->getCode(),
@@ -97,6 +98,14 @@ class ExportConstraintViolations extends Maintenance implements MessageLocalizer
 			messageLocalizer: $this,
 			config: MediaWikiServices::getInstance()->getMainConfig()
 		);
+	}
+
+	private function getEntityIdLabelFormatter(): EntityIdLabelFormatterFactory {
+		if ( method_exists( WikibaseRepo::class, 'getEntityIdLabelFormatterFactory' ) ) {
+			return WikibaseRepo::getEntityIdLabelFormatterFactory();
+		}
+
+		return new EntityIdLabelFormatterFactory();
 	}
 
 	private function getValueFormatter( Language $language ): ValueFormatter {
