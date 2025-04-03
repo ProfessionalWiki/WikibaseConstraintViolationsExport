@@ -3,7 +3,7 @@
  Export violations from the [WikibaseQualityConstraints](https://www.mediawiki.org/wiki/Extension:WikibaseQualityConstraints)
  extension to JSON via a maintenance script.
 
-Created by [Wikibase developers](https://professional.wiki/en/wikibase-software-development) at [Professional Wiki](https://professional.wiki/).
+Created by [Wikibase developers](https://professional.wiki/en/wikibase-software-development) at [Professional Wiki](https://professional.wiki/). Check out our list of [top Wikibase extensions](https://professional.wiki/en/articles/wikibase-extensions).
 
 ## Installation
 
